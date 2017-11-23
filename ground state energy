@@ -1,0 +1,19 @@
+Bdir=[1;0;0];
+Bdir=Bdir/sqrt(Bdir'*Bdir);
+D=2.88; % GHz
+g=2.003;
+BB=linspace(0,0.5,100);
+NB=length(BB);
+EE=zeros(3,NB);
+for j=1:NB
+B=BB(j)*Bdir;
+H=buildH(D,g,B);
+[V,E]=sorted_eig(H);
+EE(:,j)=E;
+end
+%% ***** Graphics *****
+figure;
+plot(1000*BB,EE,'linewidth',2);
+xlabel('Magnetic field (mT)');
+ylabel('Energy (GHz)');
+title(['Magnetic field along [',num2str(Bdir.'),']']);
